@@ -1,0 +1,1972 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌟 五年级上学期学习平台</title>
+<style>
+/* ===== 全局重置 & 基础 ===== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --primary: #FF8C42;
+  --primary-light: #FFB07A;
+  --primary-bg: #FFF3E8;
+  --secondary: #6EC6FF;
+  --secondary-light: #A8DFFF;
+  --accent: #FF6B9D;
+  --accent-light: #FFB3CC;
+  --green: #4CD964;
+  --green-light: #B8F0C0;
+  --purple: #A78BFA;
+  --purple-light: #DDD6FE;
+  --bg: #FFF8F0;
+  --card-bg: #FFFFFF;
+  --text: #2D2D2D;
+  --text-light: #888;
+  --shadow: 0 4px 20px rgba(0,0,0,0.08);
+  --radius: 20px;
+  --radius-sm: 12px;
+  --nav-height: 72px;
+}
+body {
+  font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  padding-bottom: calc(var(--nav-height) + 16px);
+  overflow-x: hidden;
+}
+/* ===== 滚动条美化 ===== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--primary-light); border-radius: 3px; }
+
+/* ===== 顶部 Header ===== */
+.header {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  padding: 20px 20px 30px;
+  color: white;
+  border-radius: 0 0 30px 30px;
+  position: relative;
+  overflow: hidden;
+}
+.header::before {
+  content: '';
+  position: absolute;
+  top: -50px; right: -50px;
+  width: 200px; height: 200px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 50%;
+}
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: -30px; left: -30px;
+  width: 150px; height: 150px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 50%;
+}
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative; z-index: 1;
+}
+.header h1 {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+.header-date {
+  font-size: 14px;
+  opacity: 0.9;
+}
+.header-greeting {
+  margin-top: 10px;
+  font-size: 16px;
+  opacity: 0.95;
+  position: relative; z-index: 1;
+}
+
+/* ===== 底部导航 ===== */
+.bottom-nav {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: var(--nav-height);
+  background: white;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0 -2px 20px rgba(0,0,0,0.08);
+  border-radius: 20px 20px 0 0;
+  z-index: 100;
+  padding: 0 4px;
+}
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 12px;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.3s;
+  border: none;
+  background: none;
+  font-family: inherit;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+}
+.nav-item .nav-icon {
+  font-size: 22px;
+  line-height: 1.2;
+}
+.nav-item .nav-label {
+  font-size: 11px;
+  color: var(--text-light);
+  transition: color 0.3s;
+}
+.nav-item.active {
+  background: var(--primary-bg);
+}
+.nav-item.active .nav-label {
+  color: var(--primary);
+  font-weight: 600;
+}
+.nav-item.active::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 3px;
+  background: var(--primary);
+  border-radius: 0 0 3px 3px;
+}
+
+/* ===== 页面容器 ===== */
+.page {
+  display: none;
+  padding: 16px;
+  animation: fadeIn 0.35s ease;
+}
+.page.active {
+  display: block;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== 通用卡片 ===== */
+.card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 18px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow);
+}
+.card-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.card-title .emoji {
+  font-size: 20px;
+}
+
+/* ===== 首页 ===== */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.stat-card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+.stat-card .stat-icon {
+  font-size: 28px;
+  margin-bottom: 6px;
+}
+.stat-card .stat-num {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--primary);
+}
+.stat-card .stat-label {
+  font-size: 12px;
+  color: var(--text-light);
+  margin-top: 2px;
+}
+.stat-card.green .stat-num { color: var(--green); }
+.stat-card.blue .stat-num { color: var(--secondary); }
+.stat-card.purple .stat-num { color: var(--purple); }
+
+/* 进度条 */
+.progress-item {
+  margin-bottom: 12px;
+}
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+.progress-bar {
+  height: 10px;
+  background: #F0F0F0;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  border-radius: 5px;
+  transition: width 0.8s ease;
+  width: 0%;
+}
+.progress-fill.chinese { background: linear-gradient(90deg, #FF6B9D, #FF8C42); }
+.progress-fill.math { background: linear-gradient(90deg, #6EC6FF, #A78BFA); }
+.progress-fill.english { background: linear-gradient(90deg, #4CD964, #6EC6FF); }
+
+/* 每日一句 */
+.daily-quote {
+  background: linear-gradient(135deg, var(--primary-bg), #FFF0F5);
+  border-radius: var(--radius);
+  padding: 18px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow);
+  border-left: 4px solid var(--primary);
+}
+.daily-quote .quote-text {
+  font-size: 15px;
+  line-height: 1.7;
+  font-style: italic;
+}
+.daily-quote .quote-author {
+  font-size: 12px;
+  color: var(--text-light);
+  margin-top: 6px;
+  text-align: right;
+}
+
+/* 每日一题 */
+.daily-question {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 18px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow);
+}
+.question-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.question-tab {
+  padding: 4px 14px;
+  border-radius: 20px;
+  border: 2px solid #E0E0E0;
+  background: none;
+  font-size: 13px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.3s;
+}
+.question-tab.active {
+  border-color: var(--primary);
+  background: var(--primary-bg);
+  color: var(--primary);
+  font-weight: 600;
+}
+.question-body {
+  font-size: 15px;
+  line-height: 1.8;
+  min-height: 60px;
+}
+.question-options {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.option-btn {
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  border: 2px solid #E8E8E8;
+  background: white;
+  font-size: 14px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.25s;
+  font-family: inherit;
+}
+.option-btn:hover { border-color: var(--secondary); }
+.option-btn.correct {
+  border-color: var(--green);
+  background: var(--green-light);
+  color: #1A7A2E;
+}
+.option-btn.wrong {
+  border-color: #FF4444;
+  background: #FFE8E8;
+  color: #CC0000;
+}
+.option-btn.disabled {
+  pointer-events: none;
+  opacity: 0.7;
+}
+.question-result {
+  margin-top: 10px;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  display: none;
+}
+.question-result.show { display: block; }
+.question-result.correct {
+  background: var(--green-light);
+  color: #1A7A2E;
+}
+.question-result.wrong {
+  background: #FFE8E8;
+  color: #CC0000;
+}
+
+/* ===== 课程表 ===== */
+.schedule-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 4px;
+}
+.schedule-table th {
+  background: var(--primary);
+  color: white;
+  padding: 10px 6px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.schedule-table td {
+  background: #FAFAFA;
+  padding: 8px 6px;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 13px;
+  vertical-align: middle;
+  min-height: 48px;
+}
+.schedule-table .period {
+  background: var(--primary-bg);
+  font-weight: 600;
+  color: var(--primary);
+  font-size: 12px;
+}
+.schedule-table .chinese-cell { background: #FFF0F5; color: #D6336C; }
+.schedule-table .math-cell { background: #EEF5FF; color: #2563EB; }
+.schedule-table .english-cell { background: #F0FFF4; color: #16A34A; }
+.schedule-table .science-cell { background: #F5F0FF; color: #7C3AED; }
+.schedule-table .pe-cell { background: #FFF7ED; color: #EA580C; }
+.schedule-table .music-cell { background: #FFF0FF; color: #C026D3; }
+.schedule-table .art-cell { background: #FEF9C3; color: #A16207; }
+.schedule-table .moral-cell { background: #F0FDF4; color: #15803D; }
+.schedule-table .computer-cell { background: #E0F2FE; color: #0369A1; }
+.schedule-table .break-cell { background: #FFFBE6; color: #CA8A04; font-weight: 600; }
+
+/* ===== 科目通用 ===== */
+.subject-section {
+  margin-bottom: 16px;
+}
+.subject-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.subject-header .subject-icon {
+  width: 48px; height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+}
+.subject-header .subject-icon.chinese { background: linear-gradient(135deg, #FF6B9D, #FF8C42); }
+.subject-header .subject-icon.math { background: linear-gradient(135deg, #6EC6FF, #A78BFA); }
+.subject-header .subject-icon.english { background: linear-gradient(135deg, #4CD964, #6EC6FF); }
+.subject-header h2 {
+  font-size: 20px;
+  font-weight: 700;
+}
+.subject-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  -webkit-overflow-scrolling: touch;
+}
+.subject-tab {
+  flex-shrink: 0;
+  padding: 6px 16px;
+  border-radius: 20px;
+  border: 2px solid #E0E0E0;
+  background: white;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: inherit;
+}
+.subject-tab.active {
+  border-color: var(--primary);
+  background: var(--primary-bg);
+  color: var(--primary);
+  font-weight: 600;
+}
+
+/* 知识点列表 */
+.knowledge-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.knowledge-item {
+  background: #FAFAFA;
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  border-left: 4px solid var(--primary);
+  transition: all 0.3s;
+  cursor: pointer;
+}
+.knowledge-item:hover { background: #F5F5F5; }
+.knowledge-item .ki-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.knowledge-item .ki-desc {
+  font-size: 13px;
+  color: var(--text-light);
+  line-height: 1.6;
+}
+.knowledge-item.chinese-item { border-left-color: #FF6B9D; }
+.knowledge-item.math-item { border-left-color: #6EC6FF; }
+.knowledge-item.english-item { border-left-color: #4CD964; }
+.knowledge-item.expanded {
+  background: #FFF;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+.knowledge-item .ki-detail {
+  display: none;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #E8E8E8;
+  font-size: 14px;
+  line-height: 1.8;
+}
+.knowledge-item.expanded .ki-detail { display: block; }
+
+/* 古诗卡片 */
+.poem-card {
+  background: linear-gradient(135deg, #FFF8F0, #FFF0F5);
+  border-radius: var(--radius);
+  padding: 18px;
+  margin-bottom: 12px;
+  box-shadow: var(--shadow);
+  border: 1px solid #FFE0E0;
+}
+.poem-card .poem-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #D6336C;
+}
+.poem-card .poem-author {
+  font-size: 13px;
+  color: var(--text-light);
+  margin: 4px 0 10px;
+}
+.poem-card .poem-content {
+  font-size: 15px;
+  line-height: 2.2;
+  letter-spacing: 1px;
+}
+
+/* 单词卡片 */
+.word-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.word-card {
+  background: #FAFAFA;
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  text-align: center;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+.word-card:hover {
+  background: var(--secondary-light);
+  transform: scale(1.02);
+}
+.word-card .word-en {
+  font-size: 16px;
+  font-weight: 700;
+  color: #2563EB;
+}
+.word-card .word-cn {
+  font-size: 13px;
+  color: var(--text-light);
+  margin-top: 4px;
+}
+
+/* 公式卡片 */
+.formula-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.formula-card {
+  background: linear-gradient(135deg, #EEF5FF, #F5F0FF);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  text-align: center;
+  border: 1px solid #E0E8FF;
+}
+.formula-card .formula-name {
+  font-size: 12px;
+  color: var(--text-light);
+  margin-bottom: 6px;
+}
+.formula-card .formula-body {
+  font-size: 18px;
+  font-weight: 700;
+  color: #2563EB;
+}
+
+/* ===== 打卡页面 ===== */
+.checkin-header {
+  text-align: center;
+  padding: 20px 0;
+}
+.checkin-header .checkin-icon {
+  font-size: 48px;
+  margin-bottom: 8px;
+}
+.checkin-header .checkin-count {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--primary);
+}
+.checkin-header .checkin-label {
+  font-size: 14px;
+  color: var(--text-light);
+}
+.checkin-btn {
+  display: block;
+  width: 200px;
+  margin: 16px auto;
+  padding: 14px 0;
+  border-radius: 50px;
+  border: none;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: inherit;
+  box-shadow: 0 4px 15px rgba(255, 140, 66, 0.4);
+}
+.checkin-btn:hover { transform: scale(1.05); }
+.checkin-btn:active { transform: scale(0.95); }
+.checkin-btn.done {
+  background: #CCCCCC;
+  box-shadow: none;
+  cursor: default;
+}
+.checkin-calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  margin-top: 12px;
+}
+.calendar-header {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-light);
+  padding: 4px 0;
+  font-weight: 600;
+}
+.calendar-day {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 13px;
+  background: #F5F5F5;
+}
+.calendar-day.today {
+  border: 2px solid var(--primary);
+  font-weight: 700;
+}
+.calendar-day.checked {
+  background: var(--green);
+  color: white;
+}
+.calendar-day.empty {
+  background: transparent;
+}
+.calendar-day.other-month {
+  color: #CCC;
+}
+
+/* 学习记录 */
+.record-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.record-form textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  border: 2px solid #E8E8E8;
+  font-size: 14px;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 60px;
+  transition: border-color 0.3s;
+}
+.record-form textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+.record-form .record-subjects {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.record-form .subject-check {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  cursor: pointer;
+}
+.record-form .subject-check input[type="checkbox"] {
+  width: 18px; height: 18px;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+.record-form .save-btn {
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  border: none;
+  background: var(--primary);
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.3s;
+}
+.record-form .save-btn:hover { background: var(--primary-light); }
+
+.record-list {
+  margin-top: 12px;
+}
+.record-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #F0F0F0;
+  font-size: 14px;
+}
+.record-item:last-child { border-bottom: none; }
+.record-item .record-date {
+  font-size: 12px;
+  color: var(--text-light);
+  min-width: 70px;
+}
+.record-item .record-subj {
+  display: flex;
+  gap: 4px;
+}
+.record-item .record-subj span {
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  color: white;
+}
+.record-item .record-subj .tag-chinese { background: #FF6B9D; }
+.record-item .record-subj .tag-math { background: #6EC6FF; }
+.record-item .record-subj .tag-english { background: #4CD964; }
+
+/* ===== 统计页面 ===== */
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.stats-chart {
+  margin-top: 12px;
+}
+.chart-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.chart-bar .bar-label {
+  width: 40px;
+  font-size: 13px;
+  text-align: right;
+}
+.chart-bar .bar-track {
+  flex: 1;
+  height: 24px;
+  background: #F0F0F0;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.chart-bar .bar-fill {
+  height: 100%;
+  border-radius: 12px;
+  transition: width 1s ease;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  font-size: 12px;
+  color: white;
+  font-weight: 600;
+  width: 0%;
+}
+.chart-bar .bar-fill.chinese { background: linear-gradient(90deg, #FF6B9D, #FF8C42); }
+.chart-bar .bar-fill.math { background: linear-gradient(90deg, #6EC6FF, #A78BFA); }
+.chart-bar .bar-fill.english { background: linear-gradient(90deg, #4CD964, #6EC6FF); }
+.chart-bar .bar-val {
+  width: 36px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* ===== 空状态 ===== */
+.empty-state {
+  text-align: center;
+  padding: 30px 20px;
+  color: var(--text-light);
+}
+.empty-state .empty-icon {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+.empty-state .empty-text {
+  font-size: 14px;
+}
+
+/* ===== 响应式 ===== */
+@media (min-width: 600px) {
+  .page { padding: 20px 40px; max-width: 800px; margin: 0 auto; }
+  .dashboard-grid { grid-template-columns: repeat(4, 1fr); }
+  .word-grid { grid-template-columns: repeat(3, 1fr); }
+  .formula-grid { grid-template-columns: repeat(3, 1fr); }
+  .stats-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* ===== 弹窗 ===== */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 200;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+.modal-overlay.show {
+  display: flex;
+}
+.modal-box {
+  background: white;
+  border-radius: var(--radius);
+  padding: 24px;
+  max-width: 400px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  animation: modalIn 0.3s ease;
+}
+@keyframes modalIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.modal-box h3 {
+  font-size: 18px;
+  margin-bottom: 12px;
+}
+.modal-box .modal-close {
+  float: right;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--text-light);
+}
+</style>
+</head>
+<body>
+
+<!-- ===== Header ===== -->
+<header class="header">
+  <div class="header-top">
+    <h1>🌟 五年级上学期</h1>
+    <span class="header-date" id="headerDate"></span>
+  </div>
+  <div class="header-greeting" id="headerGreeting">早上好呀～ 今天也要加油学习哦！📚</div>
+</header>
+
+<!-- ===== 首页 ===== -->
+<div class="page active" id="page-home">
+  <!-- 快捷统计 -->
+  <div class="dashboard-grid">
+    <div class="stat-card">
+      <div class="stat-icon">📅</div>
+      <div class="stat-num" id="statCheckinDays">0</div>
+      <div class="stat-label">已打卡天数</div>
+    </div>
+    <div class="stat-card green">
+      <div class="stat-icon">📖</div>
+      <div class="stat-num" id="statStudyDays">0</div>
+      <div class="stat-label">学习天数</div>
+    </div>
+    <div class="stat-card blue">
+      <div class="stat-icon">✅</div>
+      <div class="stat-num" id="statExercises">0</div>
+      <div class="stat-label">完成练习</div>
+    </div>
+    <div class="stat-card purple">
+      <div class="stat-icon">🏆</div>
+      <div class="stat-num" id="statScore">0</div>
+      <div class="stat-label">总得分</div>
+    </div>
+  </div>
+
+  <!-- 学习进度 -->
+  <div class="card">
+    <div class="card-title"><span class="emoji">📊</span> 学习进度</div>
+    <div class="progress-item">
+      <div class="progress-header"><span>📕 语文</span><span id="progressChineseText">0%</span></div>
+      <div class="progress-bar"><div class="progress-fill chinese" id="progressChinese"></div></div>
+    </div>
+    <div class="progress-item">
+      <div class="progress-header"><span>📘 数学</span><span id="progressMathText">0%</span></div>
+      <div class="progress-bar"><div class="progress-fill math" id="progressMath"></div></div>
+    </div>
+    <div class="progress-item">
+      <div class="progress-header"><span>📗 英语</span><span id="progressEnglishText">0%</span></div>
+      <div class="progress-bar"><div class="progress-fill english" id="progressEnglish"></div></div>
+    </div>
+  </div>
+
+  <!-- 每日一句 -->
+  <div class="daily-quote" id="dailyQuote">
+    <div class="card-title" style="margin-bottom:6px"><span class="emoji">💡</span> 每日一句</div>
+    <div class="quote-text" id="quoteText">"读书破万卷，下笔如有神。"</div>
+    <div class="quote-author" id="quoteAuthor">—— 杜甫</div>
+  </div>
+
+  <!-- 每日一题 -->
+  <div class="daily-question">
+    <div class="card-title" style="margin-bottom:8px"><span class="emoji">✏️</span> 每日一题</div>
+    <div class="question-tabs">
+      <button class="question-tab active" data-subject="chinese" onclick="switchDailyQ('chinese')">📕 语文</button>
+      <button class="question-tab" data-subject="math" onclick="switchDailyQ('math')">📘 数学</button>
+      <button class="question-tab" data-subject="english" onclick="switchDailyQ('english')">📗 英语</button>
+    </div>
+    <div class="question-body" id="questionBody"></div>
+    <div class="question-options" id="questionOptions"></div>
+    <div class="question-result" id="questionResult"></div>
+  </div>
+</div>
+
+<!-- ===== 课程表 ===== -->
+<div class="page" id="page-schedule">
+  <div class="card">
+    <div class="card-title"><span class="emoji">📅</span> 课程表</div>
+    <table class="schedule-table">
+      <thead>
+        <tr>
+          <th>节次</th>
+          <th>周一</th>
+          <th>周二</th>
+          <th>周三</th>
+          <th>周四</th>
+          <th>周五</th>
+        </tr>
+      </thead>
+      <tbody id="scheduleBody">
+        <!-- 由 JS 动态渲染 -->
+      </tbody>
+    </table>
+  </div>
+  <div style="font-size:12px;color:var(--text-light);text-align:center;margin-top:-8px">
+    💡 点击科目可标记「已学完」，数据会同步到学习进度哦
+  </div>
+</div>
+
+<!-- ===== 语文 ===== -->
+<div class="page" id="page-chinese">
+  <div class="subject-header">
+    <div class="subject-icon chinese">📕</div>
+    <h2>语文 · 统编版五年级上册</h2>
+  </div>
+  <div class="subject-tabs">
+    <button class="subject-tab active" data-tab="chinese-texts" onclick="switchSubjectTab('chinese','chinese-texts')">📖 课文</button>
+    <button class="subject-tab" data-tab="chinese-poems" onclick="switchSubjectTab('chinese','chinese-poems')">🏯 古诗词</button>
+    <button class="subject-tab" data-tab="chinese-words" onclick="switchSubjectTab('chinese','chinese-words')">✍️ 生字词</button>
+    <button class="subject-tab" data-tab="chinese-practice" onclick="switchSubjectTab('chinese','chinese-practice')">📝 每日一练</button>
+  </div>
+  <div id="chinese-texts" class="subject-section active"></div>
+  <div id="chinese-poems" class="subject-section"></div>
+  <div id="chinese-words" class="subject-section"></div>
+  <div id="chinese-practice" class="subject-section"></div>
+</div>
+
+<!-- ===== 数学 ===== -->
+<div class="page" id="page-math">
+  <div class="subject-header">
+    <div class="subject-icon math">📘</div>
+    <h2>数学 · 苏教版五年级上册</h2>
+  </div>
+  <div class="subject-tabs">
+    <button class="subject-tab active" data-tab="math-points" onclick="switchSubjectTab('math','math-points')">📚 知识点</button>
+    <button class="subject-tab" data-tab="math-formulas" onclick="switchSubjectTab('math','math-formulas')">📐 公式</button>
+    <button class="subject-tab" data-tab="math-practice" onclick="switchSubjectTab('math','math-practice')">📝 每日一练</button>
+  </div>
+  <div id="math-points" class="subject-section active"></div>
+  <div id="math-formulas" class="subject-section"></div>
+  <div id="math-practice" class="subject-section"></div>
+</div>
+
+<!-- ===== 英语 ===== -->
+<div class="page" id="page-english">
+  <div class="subject-header">
+    <div class="subject-icon english">📗</div>
+    <h2>英语 · 译林版五年级上册</h2>
+  </div>
+  <div class="subject-tabs">
+    <button class="subject-tab active" data-tab="english-words" onclick="switchSubjectTab('english','english-words')">🔤 单词</button>
+    <button class="subject-tab" data-tab="english-sentences" onclick="switchSubjectTab('english','english-sentences')">💬 重点句型</button>
+    <button class="subject-tab" data-tab="english-practice" onclick="switchSubjectTab('english','english-practice')">📝 每日一练</button>
+  </div>
+  <div id="english-words" class="subject-section active"></div>
+  <div id="english-sentences" class="subject-section"></div>
+  <div id="english-practice" class="subject-section"></div>
+</div>
+
+<!-- ===== 打卡 ===== -->
+<div class="page" id="page-checkin">
+  <div class="checkin-header">
+    <div class="checkin-icon">📋</div>
+    <div class="checkin-count" id="checkinCount">0</div>
+    <div class="checkin-label">累计打卡天数</div>
+    <button class="checkin-btn" id="checkinBtn" onclick="doCheckin()">✅ 今日打卡</button>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="emoji">📅</span> 本月打卡</div>
+    <div id="checkinCalendar"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="emoji">📝</span> 今日学习记录</div>
+    <div class="record-form">
+      <div class="record-subjects">
+        <label class="subject-check"><input type="checkbox" value="chinese" id="rcChinese"> 📕 语文</label>
+        <label class="subject-check"><input type="checkbox" value="math" id="rcMath"> 📘 数学</label>
+        <label class="subject-check"><input type="checkbox" value="english" id="rcEnglish"> 📗 英语</label>
+      </div>
+      <textarea id="recordNote" placeholder="今天学了什么？有什么收获或问题？写下来吧～"></textarea>
+      <button class="save-btn" onclick="saveRecord()">💾 保存记录</button>
+    </div>
+    <div class="record-list" id="recordList"></div>
+  </div>
+</div>
+
+<!-- ===== 统计 ===== -->
+<div class="page" id="page-stats">
+  <div class="stats-grid">
+    <div class="stat-card"><div class="stat-icon">📅</div><div class="stat-num" id="statsCheckin">0</div><div class="stat-label">打卡天数</div></div>
+    <div class="stat-card green"><div class="stat-icon">📝</div><div class="stat-num" id="statsRecords">0</div><div class="stat-label">学习记录</div></div>
+    <div class="stat-card blue"><div class="stat-icon">✅</div><div class="stat-num" id="statsExDone">0</div><div class="stat-label">练习完成</div></div>
+    <div class="stat-card purple"><div class="stat-icon">🎯</div><div class="stat-num" id="statsAccuracy">0%</div><div class="stat-label">正确率</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="emoji">📊</span> 各科练习统计</div>
+    <div class="stats-chart" id="statsChart"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="emoji">🏆</span> 成就徽章</div>
+    <div id="badgeArea" style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;padding:8px 0"></div>
+  </div>
+</div>
+
+<!-- ===== 底部导航 ===== -->
+<nav class="bottom-nav">
+  <button class="nav-item active" data-page="home" onclick="switchPage('home')">
+    <span class="nav-icon">🏠</span>
+    <span class="nav-label">首页</span>
+  </button>
+  <button class="nav-item" data-page="schedule" onclick="switchPage('schedule')">
+    <span class="nav-icon">📅</span>
+    <span class="nav-label">课程表</span>
+  </button>
+  <button class="nav-item" data-page="chinese" onclick="switchPage('chinese')">
+    <span class="nav-icon">📕</span>
+    <span class="nav-label">语文</span>
+  </button>
+  <button class="nav-item" data-page="math" onclick="switchPage('math')">
+    <span class="nav-icon">📘</span>
+    <span class="nav-label">数学</span>
+  </button>
+  <button class="nav-item" data-page="english" onclick="switchPage('english')">
+    <span class="nav-icon">📗</span>
+    <span class="nav-label">英语</span>
+  </button>
+  <button class="nav-item" data-page="checkin" onclick="switchPage('checkin')">
+    <span class="nav-icon">✅</span>
+    <span class="nav-label">打卡</span>
+  </button>
+  <button class="nav-item" data-page="stats" onclick="switchPage('stats')">
+    <span class="nav-icon">📊</span>
+    <span class="nav-label">统计</span>
+  </button>
+</nav>
+
+<!-- ===== 弹窗 ===== -->
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box" id="modalBox"></div>
+</div>
+
+<script>
+// ============================================================
+//  数据
+// ============================================================
+
+// 课程表
+const SCHEDULE = {
+  periods: ['早读', '第1节', '第2节', '大课间', '第3节', '第4节', '午休', '第5节', '第6节', '延时'],
+  mon:  ['语文', '数学', '英语', '🏃‍♂️', '科学', '音乐', '😴', '美术', '体育', '自习'],
+  tue:  ['英语', '语文', '数学', '🏃‍♂️', '道德与法治', '科学', '😴', '体育', '信息技术', '自习'],
+  wed:  ['数学', '英语', '语文', '🏃‍♂️', '音乐', '美术', '😴', '科学', '体育', '自习'],
+  thu:  ['语文', '数学', '英语', '🏃‍♂️', '体育', '道德与法治', '😴', '科学', '音乐', '自习'],
+  fri:  ['数学', '语文', '英语', '🏃‍♂️', '美术', '体育', '😴', '班会', '大扫除', '自习']
+};
+const DAYS = ['周一','周二','周三','周四','周五'];
+
+function getCellClass(subj) {
+  const map = {'语文':'chinese','数学':'math','英语':'english','科学':'science','体育':'pe','音乐':'music','美术':'art','道德与法治':'moral','信息技术':'computer','🏃‍♂️':'break','😴':'break','班会':'moral','大扫除':'moral','自习':'break'};
+  const cls = map[subj];
+  return cls ? cls + '-cell' : '';
+}
+
+// 语文课文
+const CHINESE_TEXTS = [
+  { title: '第1课 白鹭', content: '作者：郭沫若。本文以优美的语言描写了白鹭的外形和习性，赞美了白鹭如诗如画的美。' },
+  { title: '第2课 落花生', content: '作者：许地山。通过一家人过花生收获节的情景，揭示了"人要做有用的人"的深刻道理。' },
+  { title: '第3课 桂花雨', content: '作者：琦君。回忆了童年时代故乡的桂花和摇桂花的乐趣，表达了对故乡的思念。' },
+  { title: '第4课 珍珠鸟', content: '作者：冯骥才。描写了珍珠鸟从怕人到信赖人的过程，揭示了"信赖，往往创造出美好的境界"。' },
+  { title: '第5课 搭石', content: '作者：刘章。通过描写家乡搭石这一平凡事物，赞美了乡亲们默默奉献、互相礼让的精神。' },
+  { title: '第6课 将相和', content: '根据《史记》改编。讲述了"完璧归赵""渑池会面""负荆请罪"三个故事。' },
+  { title: '第7课 什么比猎豹的速度更快', content: '介绍了猎豹、游隼、喷气式飞机、火箭、光速等，让人感受到速度的神奇。' },
+  { title: '第8课 冀中的地道战', content: '介绍了抗日战争时期冀中人民利用地道打击敌人的智慧和勇气。' },
+  { title: '第9课 猎人海力布', content: '民间故事。猎人海力布为救乡亲们，不惜牺牲自己变成石头的感人故事。' },
+  { title: '第10课 牛郎织女', content: '民间故事。讲述了牛郎和织女的爱情故事，以及七夕节的由来。' },
+  { title: '第11课 古诗三首', content: '《示儿》陆游、《题临安邸》林升、《己亥杂诗》龚自珍。' },
+  { title: '第12课 少年中国说', content: '作者：梁启超。以富有激情的笔触歌颂了少年的朝气蓬勃和中国的光明未来。' },
+  { title: '第13课 圆明园的毁灭', content: '介绍了圆明园昔日的辉煌和被毁灭的经过，激发爱国情感。' },
+  { title: '第14课 木笛', content: '讲述了南京大屠杀背景下，一位木笛演奏者的民族气节。' }
+];
+
+// 古诗
+const POEMS = [
+  { title: '蝉', author: '【唐】虞世南', content: '垂緌饮清露，流响出疏桐。\n居高声自远，非是藉秋风。' },
+  { title: '乞巧', author: '【唐】林杰', content: '七夕今宵看碧霄，牵牛织女渡河桥。\n家家乞巧望秋月，穿尽红丝几万条。' },
+  { title: '示儿', author: '【宋】陆游', content: '死去元知万事空，但悲不见九州同。\n王师北定中原日，家祭无忘告乃翁。' },
+  { title: '题临安邸', author: '【宋】林升', content: '山外青山楼外楼，西湖歌舞几时休？\n暖风熏得游人醉，直把杭州作汴州。' },
+  { title: '己亥杂诗', author: '【清】龚自珍', content: '九州生气恃风雷，万马齐喑究可哀。\n我劝天公重抖擞，不拘一格降人才。' },
+  { title: '山居秋暝', author: '【唐】王维', content: '空山新雨后，天气晚来秋。\n明月松间照，清泉石上流。\n竹喧归浣女，莲动下渔舟。\n随意春芳歇，王孙自可留。' },
+  { title: '枫桥夜泊', author: '【唐】张继', content: '月落乌啼霜满天，江枫渔火对愁眠。\n姑苏城外寒山寺，夜半钟声到客船。' },
+  { title: '长相思', author: '【清】纳兰性德', content: '山一程，水一程，身向榆关那畔行，夜深千帐灯。\n风一更，雪一更，聒碎乡心梦不成，故园无此声。' }
+];
+
+// 生字词
+const CHINESE_WORDS = [
+  { word: '嫌', pinyin: 'xián', group: '嫌弃、讨嫌' },
+  { word: '哨', pinyin: 'shào', group: '口哨、哨兵' },
+  { word: '吩', pinyin: 'fēn', group: '吩咐、吩示' },
+  { word: '咐', pinyin: 'fù', group: '吩咐、嘱咐' },
+  { word: '萝', pinyin: 'luó', group: '萝卜、藤萝' },
+  { word: '糕', pinyin: 'gāo', group: '蛋糕、糕点' },
+  { word: '浸', pinyin: 'jìn', group: '沉浸、浸润' },
+  { word: '缠', pinyin: 'chán', group: '缠绕、纠缠' },
+  { word: '慕', pinyin: 'mù', group: '羡慕、爱慕' },
+  { word: '矮', pinyin: 'ǎi', group: '矮小、低矮' },
+  { word: '汛', pinyin: 'xùn', group: '汛期、防汛' },
+  { word: '挽', pinyin: 'wǎn', group: '挽留、挽回' },
+  { word: '璧', pinyin: 'bì', group: '璧玉、完璧归赵' },
+  { word: '诺', pinyin: 'nuò', group: '诺言、承诺' },
+  { word: '怯', pinyin: 'qiè', group: '胆怯、羞怯' },
+  { word: '辞', pinyin: 'cí', group: '辞别、推辞' },
+  { word: '酬', pinyin: 'chóu', group: '酬谢、报酬' },
+  { word: '延', pinyin: 'yán', group: '延长、延伸' },
+  { word: '衰', pinyin: 'shuāi', group: '衰老、衰弱' },
+  { word: '陵', pinyin: 'líng', group: '陵墓、丘陵' }
+];
+
+// 数学知识点
+const MATH_POINTS = [
+  { title: '第1单元 负数的初步认识', content: '0既不是正数也不是负数，是正数和负数的分界点。\n正数都大于0，负数都小于0。\n正负数可以表示相反意义的量，如零上温度用正数表示，零下温度用负数表示。\n读法：正号可以省略不读，负号必须读出来。' },
+  { title: '第2单元 多边形的面积', content: '平行四边形的面积 = 底 × 高（S = ah）\n三角形的面积 = 底 × 高 ÷ 2（S = ah ÷ 2）\n梯形的面积 = (上底 + 下底) × 高 ÷ 2（S = (a+b)h ÷ 2）\n公顷：1公顷 = 10000平方米，边长100米的正方形面积是1公顷。\n平方千米：1平方千米 = 1000000平方米 = 100公顷，边长1000米的正方形面积是1平方千米。' },
+  { title: '第3单元 小数的意义和性质', content: '小数的意义：分母是10、100、1000……的分数可以用小数表示。\n一位小数表示十分之几，两位小数表示百分之几，三位小数表示千分之几……\n小数的性质：小数的末尾添上"0"或去掉"0"，小数的大小不变。\n小数的大小比较：先比较整数部分，整数部分大的小数大；整数部分相同再比较十分位……\n用"万"作单位：在万位右边点上小数点，再添上"万"字。' },
+  { title: '第4单元 小数加法和减法', content: '计算小数加减法时，先把小数点对齐（也就是相同数位对齐）。\n再按照整数加减法的法则进行计算。\n得数的小数部分末尾有0，一般要把0去掉。\n注意：整数减小数时，可以先在整数右下角点上小数点，再补上相应个数的0。' },
+  { title: '第5单元 小数乘法和除法', content: '小数乘整数：先按整数乘法算出积，再看因数中有一位小数，就从积的右边起数出一位点上小数点。\n小数乘小数：先按整数乘法算出积，再看因数中一共有几位小数，就从积的右边起数出几位点上小数点。\n一个数除以小数：先把除数转化成整数，除数的小数点向右移动几位，被除数的小数点也向右移动几位。\n商的近似值：用"四舍五入"法取近似值，一般除到需要保留位数的下一位。' },
+  { title: '第6单元 统计表和条形统计图（二）', content: '复式统计表：把两个或多个统计内容的数据合并在一张统计表里。\n复式条形统计图：用两种或多种不同颜色的直条表示两组或更多组数据。\n特点：可以直观、方便地比较各组数据之间的差异。\n制图要点：图例、标轴、单位名称要完整。' },
+  { title: '第7单元 解决问题的策略', content: '列举法（一一列举）：把事情发生的可能性按一定的顺序一一列举出来，做到不重复、不遗漏。\n列表法：用表格的形式整理信息，便于分析和解决问题。\n在列举时要注意：按照一定的顺序、分类进行思考，做到有序、全面。' },
+  { title: '第8单元 用字母表示数', content: '用字母可以表示数，如用a、b、x等字母表示未知数。\n用含有字母的式子可以表示数量关系，如a + 10表示比a多10的数。\n化简含有字母的式子：运用乘法分配律进行合并化简。\n当字母的值确定时，代入计算即可求出式子的值。\n注意：数字和字母相乘时，乘号可以省略不写，数字写在字母前面。' }
+];
+
+// 公式
+const FORMULAS = [
+  { name: '正方形面积', body: 'S = a²' },
+  { name: '长方形面积', body: 'S = ab' },
+  { name: '平行四边形面积', body: 'S = ah' },
+  { name: '三角形面积', body: 'S = ah÷2' },
+  { name: '梯形面积', body: 'S=(a+b)h÷2' },
+  { name: '正方形周长', body: 'C = 4a' },
+  { name: '长方形周长', body: 'C=2(a+b)' },
+  { name: '公顷换算', body: '1公顷=10000m²' },
+  { name: '平方千米换算', body: '1km²=100公顷' },
+  { name: '小数加减法', body: '小数点对齐\n再按整数算' },
+  { name: '小数乘法', body: '先乘后数点\n末尾0要化简' },
+  { name: '小数除法', body: '除数变整数\n商不变' }
+];
+
+// 英语单词
+const ENGLISH_WORDS = [
+  // Unit 1 Goldilocks and the three bears
+  { en: 'bear', cn: '熊' },
+  { en: 'forest', cn: '森林' },
+  { en: 'soup', cn: '汤' },
+  { en: 'room', cn: '房间' },
+  { en: 'hard', cn: '硬的；困难的' },
+  { en: 'soft', cn: '柔软的' },
+  { en: 'afraid', cn: '害怕的' },
+  { en: 'in front of', cn: '在……前面' },
+  { en: 'her', cn: '她（宾格）；她的' },
+  { en: 'really', cn: '真正地；确实' },
+  // Unit 2 A new student
+  { en: 'student', cn: '学生' },
+  { en: 'classroom', cn: '教室' },
+  { en: 'second', cn: '第二' },
+  { en: 'floor', cn: '楼层；地板' },
+  { en: 'computer', cn: '电脑' },
+  { en: 'third', cn: '第三' },
+  { en: 'first', cn: '第一；首先' },
+  { en: 'swing', cn: '秋千' },
+  { en: 'push', cn: '推' },
+  { en: 'heavy', cn: '重的；沉重的' },
+  // Unit 3 Our animal friends
+  { en: 'animal', cn: '动物' },
+  { en: 'body', cn: '身体' },
+  { en: 'leg', cn: '腿' },
+  { en: 'arm', cn: '手臂' },
+  { en: 'wing', cn: '翅膀' },
+  { en: 'foot', cn: '脚（单数）' },
+  { en: 'feet', cn: '脚（复数）' },
+  { en: 'rabbit', cn: '兔子' },
+  { en: 'finger', cn: '手指' },
+  // Unit 4 Hobbies
+  { en: 'hobby', cn: '爱好' },
+  { en: 'be good at', cn: '擅长' },
+  { en: 'story', cn: '故事' },
+  { en: 'a lot of', cn: '很多' },
+  { en: 'dance', cn: '跳舞' },
+  { en: 'sing', cn: '唱歌' },
+  { en: 'watch films', cn: '看电影' },
+  { en: 'both', cn: '两者都' },
+  { en: 'idea', cn: '主意；想法' },
+  // Unit 5 What do they do?
+  { en: 'teacher', cn: '老师' },
+  { en: 'teach', cn: '教' },
+  { en: 'writer', cn: '作家' },
+  { en: 'write', cn: '写' },
+  { en: 'doctor', cn: '医生' },
+  { en: 'help', cn: '帮助' },
+  { en: 'sick', cn: '生病的' },
+  { en: 'people', cn: '人们；人民' },
+  { en: 'worker', cn: '工人' },
+  { en: 'cook', cn: '厨师；烹饪' },
+  { en: 'driver', cn: '司机' },
+  { en: 'farmer', cn: '农民' },
+  { en: 'nurse', cn: '护士' },
+  { en: 'policeman', cn: '警察' },
+  // Unit 6 My e-friend
+  { en: 'e-friend', cn: '网友' },
+  { en: 'send', cn: '发送' },
+  { en: 'email', cn: '电子邮件' },
+  { en: 'live', cn: '居住；生活' },
+  { en: 'study', cn: '学习；研究' },
+  { en: 'Australia', cn: '澳大利亚' },
+  { en: 'Canada', cn: '加拿大' },
+  { en: 'China', cn: '中国' },
+  { en: 'go fishing', cn: '去钓鱼' },
+  // Unit 7 At weekends
+  { en: 'at weekends', cn: '在周末' },
+  { en: 'grandparent', cn: '祖父母' },
+  { en: 'play with', cn: '和……一起玩' },
+  { en: 'often', cn: '经常' },
+  { en: 'chat', cn: '聊天' },
+  { en: 'internet', cn: '互联网' },
+  { en: 'go to the cinema', cn: '去看电影' },
+  { en: 'visit', cn: '参观；拜访' },
+  { en: 'always', cn: '总是；一直' },
+  { en: 'sometimes', cn: '有时候' },
+  // Unit 8 At Christmas
+  { en: 'Christmas', cn: '圣诞节' },
+  { en: 'buy', cn: '买' },
+  { en: 'present', cn: '礼物' },
+  { en: 'Christmas tree', cn: '圣诞树' },
+  { en: 'pretty', cn: '漂亮的；好看的' },
+  { en: 'thing', cn: '东西；事情' },
+  { en: 'put', cn: '放' },
+  { en: 'stocking', cn: '长筒袜' },
+  { en: 'wait for', cn: '等待' },
+  { en: 'finally', cn: '最后' },
+  { en: 'turkey', cn: '火鸡' },
+  { en: 'pudding', cn: '布丁' },
+  { en: 'card', cn: '卡片；贺卡' },
+  { en: 'merry', cn: '愉快的；快乐的' }
+];
+
+// 英语句型
+const ENGLISH_SENTENCES = [
+  // Unit 1
+  { en: 'There is a house in the forest.', cn: '森林里有一所房子。' },
+  { en: 'This soup is too hot / cold.', cn: '这汤太烫了 / 太冷了。' },
+  { en: 'Goldilocks is afraid.', cn: '金发女孩很害怕。' },
+  { en: 'There are three bears in front of her.', cn: '有三只熊在她面前。' },
+  // Unit 2
+  { en: 'Can you show me around?', cn: '你能带我参观一下吗？' },
+  { en: 'How many classrooms are there?', cn: '有多少间教室？' },
+  { en: 'Our classroom is on the second floor.', cn: '我们的教室在二楼。' },
+  { en: 'The swing is in the playground.', cn: '秋千在操场上。' },
+  { en: 'Is there a computer room?', cn: '有一间电脑室吗？' },
+  // Unit 3
+  { en: 'I have an animal friend.', cn: '我有一个动物朋友。' },
+  { en: 'It has four legs and a short tail.', cn: '它有四条腿和一条短尾巴。' },
+  { en: 'It can fly, but it has no wings.', cn: '它会飞，但它没有翅膀。' },
+  { en: 'Do you have an animal friend?', cn: '你有一个动物朋友吗？' },
+  // Unit 4
+  { en: 'What do you like doing?', cn: '你喜欢做什么？' },
+  { en: 'I like playing football.', cn: '我喜欢踢足球。' },
+  { en: 'She likes reading stories.', cn: '她喜欢读故事。' },
+  { en: 'He is good at singing.', cn: '他擅长唱歌。' },
+  { en: 'We both like watching films.', cn: '我们俩都喜欢看电影。' },
+  // Unit 5
+  { en: 'What does your father do?', cn: '你爸爸是做什么工作的？' },
+  { en: 'He is a doctor.', cn: '他是一名医生。' },
+  { en: 'She helps sick people.', cn: '她帮助病人。' },
+  { en: 'My mother is a teacher.', cn: '我妈妈是一名老师。' },
+  { en: 'He works in a factory.', cn: '他在一家工厂工作。' },
+  // Unit 6
+  { en: 'Do you have an e-friend?', cn: '你有一个网友吗？' },
+  { en: 'Wait a minute.', cn: '等一会儿。' },
+  { en: 'He lives in the UK.', cn: '他住在英国。' },
+  { en: 'He studies Chinese.', cn: '他学习中文。' },
+  { en: 'Can you send me an email?', cn: '你能给我发一封电子邮件吗？' },
+  // Unit 7
+  { en: 'What do you do at weekends?', cn: '你周末做什么？' },
+  { en: 'I often visit my grandparents.', cn: '我经常去看望我的祖父母。' },
+  { en: 'She sometimes goes to the cinema.', cn: '她有时候去看电影。' },
+  { en: 'He always plays football.', cn: '他总是踢足球。' },
+  { en: 'They chat on the Internet.', cn: '他们在网上聊天。' },
+  // Unit 8
+  { en: 'Merry Christmas!', cn: '圣诞快乐！' },
+  { en: 'We buy a Christmas tree.', cn: '我们买了一棵圣诞树。' },
+  { en: 'Father Christmas gives us presents.', cn: '圣诞老人给我们礼物。' },
+  { en: 'We put a stocking on the bed.', cn: '我们把长筒袜放在床上。' },
+  { en: 'We have a big dinner.', cn: '我们吃了一顿丰盛的晚餐。' },
+  { en: 'I wait for presents.', cn: '我等待礼物。' }
+];
+
+// 每日一句
+const QUOTES = [
+  { text: '读书破万卷，下笔如有神。', author: '—— 杜甫' },
+  { text: '学而不思则罔，思而不学则殆。', author: '—— 孔子' },
+  { text: '温故而知新，可以为师矣。', author: '—— 孔子' },
+  { text: '三人行，必有我师焉。', author: '—— 孔子' },
+  { text: '知之者不如好之者，好之者不如乐之者。', author: '—— 孔子' },
+  { text: '业精于勤，荒于嬉；行成于思，毁于随。', author: '—— 韩愈' },
+  { text: '书山有路勤为径，学海无涯苦作舟。', author: '—— 韩愈' },
+  { text: '黑发不知勤学早，白首方悔读书迟。', author: '—— 颜真卿' },
+  { text: '少壮不努力，老大徒伤悲。', author: '—— 《长歌行》' },
+  { text: '一寸光阴一寸金，寸金难买寸光阴。', author: '—— 民间谚语' },
+  { text: '千里之行，始于足下。', author: '—— 老子' },
+  { text: '不积跬步，无以至千里。', author: '—— 荀子' },
+  { text: '有志者，事竟成。', author: '—— 范晔' },
+  { text: '世上无难事，只怕有心人。', author: '—— 民间谚语' },
+  { text: '虚心使人进步，骄傲使人落后。', author: '—— 毛泽东' },
+  { text: '为中华之崛起而读书。', author: '—— 周恩来' },
+  { text: '天行健，君子以自强不息。', author: '—— 《周易》' },
+  { text: '宝剑锋从磨砺出，梅花香自苦寒来。', author: '—— 民间谚语' }
+];
+
+// 每日一题题库
+const QUESTION_BANK = {
+  chinese: [
+    { q: '"居高声自远，非是藉秋风"出自哪首诗？', options: ['《蝉》', '《蜂》', '《风》', '《咏柳》'], answer: 0 },
+    { q: '《落花生》的作者是谁？', options: ['鲁迅', '许地山', '老舍', '巴金'], answer: 1 },
+    { q: '"完璧归赵"出自哪个故事？', options: ['《将相和》', '《草船借箭》', '《负荆请罪》', '《三顾茅庐》'], answer: 0 },
+    { q: '《少年中国说》的作者是？', options: ['鲁迅', '梁启超', '康有为', '胡适'], answer: 1 },
+    { q: '王师北定中原日，家祭无忘告乃翁。——出自哪首诗？', options: ['《示儿》', '《己亥杂诗》', '《题临安邸》', '《秋夜将晓出篱门迎凉有感》'], answer: 0 },
+    { q: '下列哪个词语是"非常羡慕"的意思？', options: ['爱慕', '讨厌', '嫌弃', '鄙视'], answer: 0 },
+    { q: '"居高声自远"的下一句是？', options: ['流响出疏桐', '非是藉秋风', '垂緌饮清露', '飞在青云端'], answer: 1 },
+    { q: '《猎人海力布》中，海力布最后变成了什么？', options: ['石头', '大树', '小鸟', '河流'], answer: 0 },
+    { q: '"不拘一格降人才"出自谁的诗？', options: ['陆游', '林升', '龚自珍', '纳兰性德'], answer: 2 },
+    { q: '《冀中的地道战》发生在哪个时期？', options: ['抗日战争', '解放战争', '抗美援朝', '辛亥革命'], answer: 0 }
+  ],
+  math: [
+    { q: '下列哪个是负数？', options: ['0', '5', '-3', '1.5'], answer: 2 },
+    { q: '平行四边形的面积公式是？', options: ['S = ah', 'S = ah÷2', 'S = (a+b)h÷2', 'S = a²'], answer: 0 },
+    { q: '1公顷等于多少平方米？', options: ['100m²', '1000m²', '10000m²', '100000m²'], answer: 2 },
+    { q: '三角形的面积 = 底 × 高 ÷ 2，底为6cm，高为4cm，面积是多少？', options: ['24cm²', '12cm²', '10cm²', '20cm²'], answer: 1 },
+    { q: '小数的末尾添上"0"，小数的大小会怎样？', options: ['变大', '变小', '不变', '无法确定'], answer: 2 },
+    { q: '梯形的面积公式是？', options: ['S = ah', 'S = ah÷2', 'S = (a+b)h÷2', 'S = ab'], answer: 2 },
+    { q: '1平方千米等于多少公顷？', options: ['10公顷', '100公顷', '1000公顷', '10000公顷'], answer: 1 },
+    { q: '3.6 + 0.9 = ？', options: ['4.5', '3.15', '4.0', '3.69'], answer: 0 },
+    { q: '0℃表示什么？', options: ['没有温度', '零上温度', '零下温度', '零上温度和零下温度的分界点'], answer: 3 },
+    { q: '5.2 - 1.8 = ？', options: ['3.4', '4.4', '3.6', '4.6'], answer: 0 },
+    { q: '一个平行四边形的底是8cm，高是5cm，面积是多少？', options: ['40cm²', '20cm²', '13cm²', '80cm²'], answer: 0 },
+    { q: '用字母表示数，a × 3 通常写作？', options: ['a3', '3a', 'a+3', 'a÷3'], answer: 1 }
+  ],
+  english: [
+    { q: '"bear" 的中文意思是？', options: ['熊', '鸟', '兔子', '猫'], answer: 0 },
+    { q: '"What does your father do?" 的中文意思是？', options: ['你爸爸是谁？', '你爸爸是做什么工作的？', '你爸爸在哪里？', '你爸爸喜欢什么？'], answer: 1 },
+    { q: '"hobby" 的意思是？', options: ['习惯', '爱好', '作业', '家务'], answer: 1 },
+    { q: '"There is a house in the forest." 的中文意思是？', options: ['森林里有一所房子', '房子里有一片森林', '房子在森林旁边', '森林很大'], answer: 0 },
+    { q: '"Merry Christmas!" 是什么意思？', options: ['新年快乐！', '生日快乐！', '圣诞快乐！', '节日快乐！'], answer: 2 },
+    { q: '"at weekends" 是什么意思？', options: ['在工作日', '在周末', '在假期', '在夜晚'], answer: 1 },
+    { q: '"policeman" 的中文意思是？', options: ['消防员', '警察', '邮递员', '驾驶员'], answer: 1 },
+    { q: '"I like reading stories." 的中文意思是？', options: ['我喜欢写故事', '我喜欢读故事', '我喜欢讲故事', '我喜欢买故事书'], answer: 1 },
+    { q: '"He lives in the UK." UK 是指？', options: ['美国', '英国', '澳大利亚', '加拿大'], answer: 1 },
+    { q: '"soft" 的反义词是？', options: ['hard', 'small', 'short', 'sweet'], answer: 0 },
+    { q: '"Can you show me around?" 的中文意思是？', options: ['你能带我参观一下吗？', '你能给我看看吗？', '你能帮我吗？', '你能过来一下吗？'], answer: 0 },
+    { q: '"She is a nurse." 护士用英语怎么说？', options: ['doctor', 'teacher', 'nurse', 'worker'], answer: 2 }
+  ]
+};
+
+// 初始化日常题目索引
+let dailyQIndex = { chinese: 0, math: 0, english: 0 };
+let dailyQAnswered = { chinese: false, math: false, english: false };
+
+// ============================================================
+//  工具函数
+// ============================================================
+
+function getDateStr(d) {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2,'0');
+  const day = String(d.getDate()).padStart(2,'0');
+  return `${y}-${m}-${day}`;
+}
+
+function getTodayStr() {
+  return getDateStr(new Date());
+}
+
+function getLS(key, def) {
+  try { return JSON.parse(localStorage.getItem(key)) || def; } catch { return def; }
+}
+function setLS(key, val) {
+  localStorage.setItem(key, JSON.stringify(val));
+}
+
+// ============================================================
+//  初始化 & 数据加载
+// ============================================================
+
+let checkinData = getLS('loomy_g5_checkin', { days: [], total: 0 });
+let records = getLS('loomy_g5_records', []);
+let scheduleStatus = getLS('loomy_g5_schedule', {});
+let exerciseStats = getLS('loomy_g5_exercise', { chinese:0, math:0, english:0, correct:0, total:0 });
+
+function init() {
+  // 日期
+  const now = new Date();
+  const weekdays = ['日','一','二','三','四','五','六'];
+  document.getElementById('headerDate').textContent =
+    `${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日 周${weekdays[now.getDay()]}`;
+
+  // 问候
+  const h = now.getHours();
+  let greet = '早上好呀～ 今天也要加油学习哦！📚';
+  if (h >= 12 && h < 14) greet = '中午好～ 吃饱了休息一下，下午继续学！😊';
+  else if (h >= 14 && h < 18) greet = '下午好～ 学习的时间到啦，加油！💪';
+  else if (h >= 18) greet = '晚上好～ 今天的学习完成了吗？🌟';
+  document.getElementById('headerGreeting').textContent = greet;
+
+  // 每日一句
+  const qi = now.getDate() % QUOTES.length;
+  document.getElementById('quoteText').textContent = '"' + QUOTES[qi].text + '"';
+  document.getElementById('quoteAuthor').textContent = QUOTES[qi].author;
+
+  // 渲染各模块
+  renderSchedule();
+  renderChinese();
+  renderMath();
+  renderEnglish();
+  renderCheckinCalendar();
+  renderRecords();
+  renderStats();
+  updateDashboard();
+  updateDailyQuestion();
+  updateCheckinBtn();
+}
+
+// ============================================================
+//  页面切换
+// ============================================================
+
+function switchPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.querySelector(`.nav-item[data-page="${page}"]`).classList.add('active');
+  if (page === 'checkin') { renderCheckinCalendar(); renderRecords(); updateCheckinBtn(); }
+  if (page === 'stats') renderStats();
+  if (page === 'home') updateDashboard();
+  // 滚动到顶部
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ============================================================
+//  课程表
+// ============================================================
+
+function renderSchedule() {
+  const tbody = document.getElementById('scheduleBody');
+  let html = '';
+  SCHEDULE.periods.forEach((period, pi) => {
+    html += '<tr>';
+    html += `<td class="period">${period}</td>`;
+    DAYS.forEach((day, di) => {
+      const key = `${day}-${pi}`;
+      const done = scheduleStatus[key];
+      const days = ['mon','tue','wed','thu','fri'];
+      const subj = SCHEDULE[days[di]][pi];
+      const cls = getCellClass(subj);
+      html += `<td class="${cls}" style="${done ? 'opacity:0.5;text-decoration:line-through;' : ''}" onclick="toggleSchedule('${key}', this)">${subj}</td>`;
+    });
+    html += '</tr>';
+  });
+  tbody.innerHTML = html;
+}
+
+function toggleSchedule(key, el) {
+  scheduleStatus[key] = !scheduleStatus[key];
+  setLS('loomy_g5_schedule', scheduleStatus);
+  el.style.opacity = scheduleStatus[key] ? '0.5' : '';
+  el.style.textDecoration = scheduleStatus[key] ? 'line-through' : '';
+  updateDashboard();
+}
+
+// ============================================================
+//  语文
+// ============================================================
+
+function renderChinese() {
+  // 课文
+  let html = '<div class="knowledge-list">';
+  CHINESE_TEXTS.forEach((t, i) => {
+    html += `<div class="knowledge-item chinese-item" onclick="toggleDetail(this)">
+      <div class="ki-title">${t.title}</div>
+      <div class="ki-desc">${t.content.substring(0, 30)}…</div>
+      <div class="ki-detail">${t.content}</div>
+    </div>`;
+  });
+  html += '</div>';
+  document.getElementById('chinese-texts').innerHTML = html;
+
+  // 古诗
+  html = '';
+  POEMS.forEach(p => {
+    html += `<div class="poem-card">
+      <div class="poem-title">${p.title}</div>
+      <div class="poem-author">${p.author}</div>
+      <div class="poem-content">${p.content.replace(/\n/g, '<br>')}</div>
+    </div>`;
+  });
+  document.getElementById('chinese-poems').innerHTML = html;
+
+  // 生字词
+  html = '<div class="word-grid">';
+  CHINESE_WORDS.forEach(w => {
+    html += `<div class="word-card" onclick="showWordDetail('${w.word}','${w.pinyin}','${w.group}')">
+      <div class="word-en" style="color:#D6336C">${w.word}</div>
+      <div class="word-cn">${w.pinyin}</div>
+    </div>`;
+  });
+  html += '</div>';
+  document.getElementById('chinese-words').innerHTML = html;
+
+  // 每日一练
+  renderSubjectPractice('chinese');
+}
+
+// ============================================================
+//  数学
+// ============================================================
+
+function renderMath() {
+  // 知识点
+  let html = '<div class="knowledge-list">';
+  MATH_POINTS.forEach(p => {
+    html += `<div class="knowledge-item math-item" onclick="toggleDetail(this)">
+      <div class="ki-title">${p.title}</div>
+      <div class="ki-desc">${p.content.substring(0, 30)}…</div>
+      <div class="ki-detail">${p.content.replace(/\n/g, '<br>')}</div>
+    </div>`;
+  });
+  html += '</div>';
+  document.getElementById('math-points').innerHTML = html;
+
+  // 公式
+  html = '<div class="formula-grid">';
+  FORMULAS.forEach(f => {
+    html += `<div class="formula-card">
+      <div class="formula-name">${f.name}</div>
+      <div class="formula-body">${f.body}</div>
+    </div>`;
+  });
+  html += '</div>';
+  document.getElementById('math-formulas').innerHTML = html;
+
+  // 每日一练
+  renderSubjectPractice('math');
+}
+
+// ============================================================
+//  英语
+// ============================================================
+
+function renderEnglish() {
+  // 单词
+  let html = '<div class="word-grid">';
+  ENGLISH_WORDS.forEach(w => {
+    html += `<div class="word-card" onclick="showWordDetail('${w.en}','','${w.cn}')">
+      <div class="word-en">${w.en}</div>
+      <div class="word-cn">${w.cn}</div>
+    </div>`;
+  });
+  html += '</div>';
+  document.getElementById('english-words').innerHTML = html;
+
+  // 句型
+  html = '<div class="knowledge-list">';
+  ENGLISH_SENTENCES.forEach(s => {
+    html += `<div class="knowledge-item english-item" onclick="toggleDetail(this)">
+      <div class="ki-title">${s.en}</div>
+      <div class="ki-desc">${s.cn}</div>
+      <div class="ki-detail">💡 <strong>${s.en}</strong><br>📖 中文：${s.cn}</div>
+    </div>`;
+  });
+  html += '</div>';
+  document.getElementById('english-sentences').innerHTML = html;
+
+  // 每日一练
+  renderSubjectPractice('english');
+}
+
+// ============================================================
+//  科目 Tab 切换
+// ============================================================
+
+function switchSubjectTab(subject, tab) {
+  const page = document.getElementById('page-' + subject);
+  page.querySelectorAll('.subject-tab').forEach(t => t.classList.remove('active'));
+  page.querySelector(`.subject-tab[data-tab="${tab}"]`).classList.add('active');
+  page.querySelectorAll('.subject-section').forEach(s => s.classList.remove('active'));
+  document.getElementById(tab).classList.add('active');
+}
+
+// ============================================================
+//  知识点展开
+// ============================================================
+
+function toggleDetail(el) {
+  el.classList.toggle('expanded');
+}
+
+// ============================================================
+//  生字词/单词弹窗
+// ============================================================
+
+function showWordDetail(word, pinyin, meaning) {
+  const box = document.getElementById('modalBox');
+  box.innerHTML = `
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <h3>📖 ${word}</h3>
+    ${pinyin ? `<p style="color:var(--text-light);font-size:16px;margin:8px 0">拼音：${pinyin}</p>` : ''}
+    <p style="font-size:16px;line-height:1.8">${meaning}</p>
+  `;
+  document.getElementById('modalOverlay').classList.add('show');
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('show');
+}
+
+// ============================================================
+//  每日一题
+// ============================================================
+
+function updateDailyQuestion() {
+  const today = getTodayStr();
+  const progress = getLS('loomy_g5_dailyq', {});
+  const subj = document.querySelector('.question-tab.active').dataset.subject;
+  const idx = dailyQIndex[subj];
+  const q = QUESTION_BANK[subj][idx % QUESTION_BANK[subj].length];
+  const done = progress[today + '-' + subj];
+
+  document.getElementById('questionBody').textContent = q.q;
+  let opts = '';
+  q.options.forEach((o, i) => {
+    const cls = [];
+    if (done !== undefined) {
+      cls.push('disabled');
+      if (i === q.answer) cls.push('correct');
+      if (done === i && i !== q.answer) cls.push('wrong');
+    }
+    opts += `<button class="option-btn ${cls.join(' ')}" onclick="answerDailyQ(${i}, ${q.answer}, '${subj}')">${o}</button>`;
+  });
+  document.getElementById('questionOptions').innerHTML = opts;
+
+  const result = document.getElementById('questionResult');
+  if (done !== undefined) {
+    result.className = 'question-result show ' + (done === q.answer ? 'correct' : 'wrong');
+    result.textContent = done === q.answer ? '🎉 回答正确！太棒了！' : `😅 正确答案是：${q.options[q.answer]}`;
+    dailyQAnswered[subj] = true;
+  } else {
+    result.className = 'question-result';
+    result.textContent = '';
+    dailyQAnswered[subj] = false;
+  }
+}
+
+function switchDailyQ(subj) {
+  document.querySelectorAll('.question-tab').forEach(t => t.classList.remove('active'));
+  document.querySelector(`.question-tab[data-subject="${subj}"]`).classList.add('active');
+  updateDailyQuestion();
+}
+
+function answerDailyQ(idx, ans, subj) {
+  if (dailyQAnswered[subj]) return;
+  const today = getTodayStr();
+  const progress = getLS('loomy_g5_dailyq', {});
+  progress[today + '-' + subj] = idx;
+  setLS('loomy_g5_dailyq', progress);
+
+  exerciseStats.total++;
+  if (idx === ans) exerciseStats.correct++;
+  exerciseStats[subj]++;
+  setLS('loomy_g5_exercise', exerciseStats);
+
+  dailyQAnswered[subj] = true;
+  updateDailyQuestion();
+  updateDashboard();
+}
+
+// ============================================================
+//  科目每日一练
+// ============================================================
+
+function renderSubjectPractice(subj) {
+  const container = document.getElementById(subj + '-practice');
+  const bank = QUESTION_BANK[subj];
+  const today = getTodayStr();
+  const progress = getLS('loomy_g5_dailyq', {});
+  let idx = 0;
+  // 找一道今天没做的题
+  let q = null;
+  for (let i = 0; i < bank.length; i++) {
+    const key = today + '-' + subj + '-practice-' + i;
+    if (!progress[key]) { idx = i; q = bank[i]; break; }
+  }
+  if (!q) {
+    container.innerHTML = '<div class="empty-state"><div class="empty-icon">🎉</div><div class="empty-text">今天的练习题都做完啦！明天再来吧～</div></div>';
+    return;
+  }
+
+  let html = `<div class="card" style="margin:0">
+    <div class="card-title"><span class="emoji">✏️</span> 今日练习</div>
+    <div style="font-size:15px;line-height:1.8;margin-bottom:10px">${q.q}</div>
+    <div style="display:flex;flex-direction:column;gap:8px">`;
+  q.options.forEach((o, i) => {
+    html += `<button class="option-btn" onclick="answerPractice(${idx}, ${i}, ${q.answer}, '${subj}')" id="prac-${subj}-${i}">${o}</button>`;
+  });
+  html += '</div><div id="prac-result-' + subj + '" style="margin-top:10px;font-size:14px"></div></div>';
+  container.innerHTML = html;
+}
+
+function answerPractice(idx, chosen, ans, subj) {
+  const btns = document.querySelectorAll(`#${subj}-practice .option-btn`);
+  btns.forEach(b => b.classList.add('disabled'));
+  const result = document.getElementById('prac-result-' + subj);
+  if (chosen === ans) {
+    btns[chosen].classList.add('correct');
+    result.innerHTML = '🎉 回答正确！太棒了！';
+    result.style.color = '#1A7A2E';
+  } else {
+    btns[chosen].classList.add('wrong');
+    btns[ans].classList.add('correct');
+    result.innerHTML = `😅 正确答案是：${QUESTION_BANK[subj][idx].options[ans]}`;
+    result.style.color = '#CC0000';
+  }
+  exerciseStats.total++;
+  if (chosen === ans) exerciseStats.correct++;
+  exerciseStats[subj]++;
+  setLS('loomy_g5_exercise', exerciseStats);
+
+  const today = getTodayStr();
+  const progress = getLS('loomy_g5_dailyq', {});
+  progress[today + '-' + subj + '-practice-' + idx] = true;
+  setLS('loomy_g5_dailyq', progress);
+  updateDashboard();
+}
+
+// ============================================================
+//  打卡
+// ============================================================
+
+function updateCheckinBtn() {
+  const today = getTodayStr();
+  const btn = document.getElementById('checkinBtn');
+  if (checkinData.days.includes(today)) {
+    btn.textContent = '✅ 今日已打卡';
+    btn.className = 'checkin-btn done';
+  } else {
+    btn.textContent = '✅ 今日打卡';
+    btn.className = 'checkin-btn';
+  }
+  document.getElementById('checkinCount').textContent = checkinData.total;
+}
+
+function doCheckin() {
+  const today = getTodayStr();
+  if (checkinData.days.includes(today)) return;
+  checkinData.days.push(today);
+  checkinData.total++;
+  setLS('loomy_g5_checkin', checkinData);
+  updateCheckinBtn();
+  renderCheckinCalendar();
+  updateDashboard();
+}
+
+function renderCheckinCalendar() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth();
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const today = now.getDate();
+
+  let html = '<div class="checkin-calendar">';
+  ['日','一','二','三','四','五','六'].forEach(d => {
+    html += `<div class="calendar-header">${d}</div>`;
+  });
+  for (let i = 0; i < firstDay; i++) {
+    html += '<div class="calendar-day empty"></div>';
+  }
+  for (let d = 1; d <= daysInMonth; d++) {
+    const dateStr = getDateStr(new Date(year, month, d));
+    const isToday = d === today;
+    const isChecked = checkinData.days.includes(dateStr);
+    const cls = ['calendar-day'];
+    if (isToday) cls.push('today');
+    if (isChecked) cls.push('checked');
+    html += `<div class="${cls.join(' ')}">${d}</div>`;
+  }
+  html += '</div>';
+  document.getElementById('checkinCalendar').innerHTML = html;
+}
+
+// ============================================================
+//  学习记录
+// ============================================================
+
+function saveRecord() {
+  const note = document.getElementById('recordNote').value.trim();
+  const subjects = [];
+  if (document.getElementById('rcChinese').checked) subjects.push('chinese');
+  if (document.getElementById('rcMath').checked) subjects.push('math');
+  if (document.getElementById('rcEnglish').checked) subjects.push('english');
+
+  if (subjects.length === 0) {
+    alert('请至少选择一门科目哦～');
+    return;
+  }
+
+  const today = getTodayStr();
+  records.unshift({ date: today, subjects, note: note || '学习了 ' + subjects.join(',') });
+  if (records.length > 100) records.pop();
+  setLS('loomy_g5_records', records);
+  renderRecords();
+  updateDashboard();
+
+  // 重置表单
+  document.getElementById('recordNote').value = '';
+  document.querySelectorAll('.record-form input[type="checkbox"]').forEach(c => c.checked = false);
+}
+
+function renderRecords() {
+  const list = document.getElementById('recordList');
+  if (records.length === 0) {
+    list.innerHTML = '<div class="empty-state"><div class="empty-icon">📝</div><div class="empty-text">还没有学习记录，今天学完记得来打卡哦～</div></div>';
+    return;
+  }
+  const subjMap = { chinese: '语文', math: '数学', english: '英语' };
+  const clsMap = { chinese: 'tag-chinese', math: 'tag-math', english: 'tag-english' };
+  let html = '';
+  records.slice(0, 20).forEach(r => {
+    html += `<div class="record-item">
+      <span class="record-date">${r.date}</span>
+      <span class="record-subj">${r.subjects.map(s => `<span class="${clsMap[s]}">${subjMap[s]}</span>`).join('')}</span>
+      <span style="font-size:12px;color:var(--text-light);max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.note}</span>
+    </div>`;
+  });
+  list.innerHTML = html;
+}
+
+// ============================================================
+//  统计
+// ============================================================
+
+function renderStats() {
+  document.getElementById('statsCheckin').textContent = checkinData.total;
+  document.getElementById('statsRecords').textContent = records.length;
+  document.getElementById('statsExDone').textContent = exerciseStats.total;
+  document.getElementById('statsAccuracy').textContent = exerciseStats.total > 0
+    ? Math.round(exerciseStats.correct / exerciseStats.total * 100) + '%' : '0%';
+
+  // 各科图表
+  const subjMap = { chinese: '语文', math: '数学', english: '英语' };
+  const clsMap = { chinese: 'chinese', math: 'math', english: 'english' };
+  const maxVal = Math.max(exerciseStats.chinese, exerciseStats.math, exerciseStats.english, 1);
+  let html = '';
+  ['chinese','math','english'].forEach(s => {
+    const val = exerciseStats[s];
+    const pct = Math.round(val / maxVal * 100);
+    html += `<div class="chart-bar">
+      <span class="bar-label">${subjMap[s]}</span>
+      <div class="bar-track"><div class="bar-fill ${clsMap[s]}" style="width:${pct}%">${val}</div></div>
+      <span class="bar-val">${val}</span>
+    </div>`;
+  });
+  document.getElementById('statsChart').innerHTML = html;
+
+  // 成就徽章
+  renderBadges();
+}
+
+function renderBadges() {
+  const area = document.getElementById('badgeArea');
+  const badges = [];
+  // 打卡徽章
+  if (checkinData.total >= 1) badges.push({ icon: '✅', label: '初次打卡', color: '#4CD964' });
+  if (checkinData.total >= 7) badges.push({ icon: '🌟', label: '坚持一周', color: '#6EC6FF' });
+  if (checkinData.total >= 14) badges.push({ icon: '🔥', label: '半月之星', color: '#FF8C42' });
+  if (checkinData.total >= 30) badges.push({ icon: '🏆', label: '满月达人', color: '#FF6B9D' });
+
+  // 练习徽章
+  if (exerciseStats.total >= 5) badges.push({ icon: '✏️', label: '小试牛刀', color: '#A78BFA' });
+  if (exerciseStats.total >= 20) badges.push({ icon: '📚', label: '勤学苦练', color: '#FF8C42' });
+  if (exerciseStats.total >= 50) badges.push({ icon: '🧠', label: '学霸初成', color: '#FF6B9D' });
+
+  if (records.length >= 5) badges.push({ icon: '📝', label: '记录达人', color: '#6EC6FF' });
+  if (exerciseStats.total > 0 && exerciseStats.correct / exerciseStats.total >= 0.8) {
+    badges.push({ icon: '🎯', label: '神准射手', color: '#4CD964' });
+  }
+
+  if (badges.length === 0) {
+    area.innerHTML = '<div style="color:var(--text-light);font-size:14px;padding:10px">开始学习和打卡，解锁更多成就徽章吧！🌟</div>';
+    return;
+  }
+  let html = '';
+  badges.forEach(b => {
+    html += `<div style="text-align:center;min-width:70px">
+      <div style="font-size:36px;margin-bottom:4px">${b.icon}</div>
+      <div style="font-size:11px;color:var(--text-light)">${b.label}</div>
+    </div>`;
+  });
+  area.innerHTML = html;
+}
+
+// ============================================================
+//  首页仪表盘更新
+// ============================================================
+
+function updateDashboard() {
+  // 统计
+  document.getElementById('statCheckinDays').textContent = checkinData.total;
+  document.getElementById('statStudyDays').textContent = records.length;
+  document.getElementById('statExercises').textContent = exerciseStats.total;
+  document.getElementById('statScore').textContent = exerciseStats.correct;
+
+  // 进度：根据完成课程表数量、练习数量等综合计算
+  // 语文：课程表完成比例 + 练习完成比例
+  const totalScheduleItems = SCHEDULE.periods.length * 5;
+  const doneItems = Object.values(scheduleStatus).filter(v => v).length;
+  const schedulePct = Math.min(doneItems / totalScheduleItems * 100, 100);
+
+  // 各科练习进度
+  const chinesePct = Math.min(exerciseStats.chinese / QUESTION_BANK.chinese.length * 100, 100);
+  const mathPct = Math.min(exerciseStats.math / QUESTION_BANK.math.length * 100, 100);
+  const englishPct = Math.min(exerciseStats.english / QUESTION_BANK.english.length * 100, 100);
+
+  // 综合进度 = 课程表进度 × 30% + 练习进度 × 70%
+  const chineseOverall = Math.round(schedulePct * 0.3 + chinesePct * 0.7);
+  const mathOverall = Math.round(schedulePct * 0.3 + mathPct * 0.7);
+  const englishOverall = Math.round(schedulePct * 0.3 + englishPct * 0.7);
+
+  document.getElementById('progressChinese').style.width = chineseOverall + '%';
+  document.getElementById('progressChineseText').textContent = chineseOverall + '%';
+  document.getElementById('progressMath').style.width = mathOverall + '%';
+  document.getElementById('progressMathText').textContent = mathOverall + '%';
+  document.getElementById('progressEnglish').style.width = englishOverall + '%';
+  document.getElementById('progressEnglishText').textContent = englishOverall + '%';
+}
+
+// ============================================================
+//  启动
+// ============================================================
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
