@@ -785,6 +785,226 @@ body {
   .stats-grid { grid-template-columns: repeat(4, 1fr); }
 }
 
+/* ===== 听写功能 ===== */
+.dictation-box {
+  text-align: center;
+  padding: 30px 20px;
+}
+.dictation-word {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--primary);
+  margin: 16px 0;
+  min-height: 50px;
+}
+.dictation-hint {
+  font-size: 14px;
+  color: var(--text-light);
+  margin-bottom: 16px;
+}
+.dictation-progress {
+  font-size: 14px;
+  color: var(--text-light);
+  margin-bottom: 8px;
+}
+.dictation-input {
+  width: 80%;
+  max-width: 300px;
+  padding: 12px 16px;
+  font-size: 20px;
+  border: 3px solid #E0E0E0;
+  border-radius: 14px;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.3s;
+  font-family: inherit;
+}
+.dictation-input:focus {
+  border-color: var(--primary);
+}
+.dictation-btns {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+.dictation-btn {
+  padding: 10px 28px;
+  border-radius: 50px;
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: inherit;
+}
+.dictation-btn.primary {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: white;
+  box-shadow: 0 4px 12px rgba(255,140,66,0.3);
+}
+.dictation-btn.primary:hover { transform: scale(1.05); }
+.dictation-btn.secondary {
+  background: #F0F0F0;
+  color: var(--text);
+}
+.dictation-btn.secondary:hover { background: #E0E0E0; }
+.dictation-btn.sound {
+  background: var(--secondary-light);
+  color: #2563EB;
+  font-size: 20px;
+  padding: 10px 16px;
+}
+.dictation-btn.sound:hover { background: #8FD4FF; }
+.dictation-btn:disabled { opacity: 0.5; cursor: default; transform: none; }
+.dictation-result {
+  margin-top: 16px;
+  font-size: 18px;
+  font-weight: 600;
+  min-height: 30px;
+}
+.dictation-result.correct { color: #16A34A; }
+.dictation-result.wrong { color: #DC2626; }
+.dictation-summary {
+  padding: 20px;
+}
+.dictation-summary h3 {
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+.dictation-summary .summary-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #F0F0F0;
+  font-size: 14px;
+}
+.dictation-summary .summary-item .word-correct { color: #16A34A; }
+.dictation-summary .summary-item .word-wrong { color: #DC2626; }
+
+/* ===== 数学每日计算 ===== */
+.calculation-box {
+  padding: 10px 0;
+}
+.calculation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.calculation-header .calc-title {
+  font-size: 16px;
+  font-weight: 700;
+}
+.calculation-header .calc-timer {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--primary);
+}
+.calc-question {
+  background: #FAFAFA;
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.calc-question .q-num {
+  width: 28px;
+  height: 28px;
+  background: var(--primary);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.calc-question .q-text {
+  font-size: 17px;
+  font-weight: 600;
+  min-width: 120px;
+  flex-shrink: 0;
+}
+.calc-question .q-input {
+  width: 100px;
+  padding: 6px 10px;
+  border: 2px solid #E0E0E0;
+  border-radius: 8px;
+  font-size: 16px;
+  text-align: center;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.3s;
+}
+.calc-question .q-input:focus { border-color: var(--primary); }
+.calc-question .q-input.correct {
+  border-color: var(--green);
+  background: var(--green-light);
+}
+.calc-question .q-input.wrong {
+  border-color: #DC2626;
+  background: #FFE8E8;
+}
+.calc-question .q-status {
+  font-size: 18px;
+  min-width: 24px;
+}
+.calc-submit-btn {
+  display: block;
+  width: 200px;
+  margin: 16px auto;
+  padding: 12px 0;
+  border-radius: 50px;
+  border: none;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: inherit;
+  box-shadow: 0 4px 12px rgba(255,140,66,0.3);
+}
+.calc-submit-btn:hover { transform: scale(1.05); }
+.calc-submit-btn:disabled {
+  background: #CCC;
+  box-shadow: none;
+  cursor: default;
+  transform: none;
+}
+.calc-score {
+  text-align: center;
+  padding: 20px;
+}
+.calc-score .score-num {
+  font-size: 48px;
+  font-weight: 800;
+  color: var(--primary);
+}
+.calc-score .score-label {
+  font-size: 16px;
+  color: var(--text-light);
+}
+.calc-result-list {
+  margin-top: 12px;
+}
+.calc-result-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid #F0F0F0;
+  font-size: 14px;
+}
+.calc-result-item .r-correct { color: #16A34A; }
+.calc-result-item .r-wrong { color: #DC2626; }
+
 /* ===== 弹窗 ===== */
 .modal-overlay {
   display: none;
@@ -937,11 +1157,13 @@ body {
     <button class="subject-tab active" data-tab="chinese-texts" onclick="switchSubjectTab('chinese','chinese-texts')">📖 课文</button>
     <button class="subject-tab" data-tab="chinese-poems" onclick="switchSubjectTab('chinese','chinese-poems')">🏯 古诗词</button>
     <button class="subject-tab" data-tab="chinese-words" onclick="switchSubjectTab('chinese','chinese-words')">✍️ 生字词</button>
+    <button class="subject-tab" data-tab="chinese-dictation" onclick="switchSubjectTab('chinese','chinese-dictation')">🎧 听写</button>
     <button class="subject-tab" data-tab="chinese-practice" onclick="switchSubjectTab('chinese','chinese-practice')">📝 每日一练</button>
   </div>
   <div id="chinese-texts" class="subject-section active"></div>
   <div id="chinese-poems" class="subject-section"></div>
   <div id="chinese-words" class="subject-section"></div>
+  <div id="chinese-dictation" class="subject-section"></div>
   <div id="chinese-practice" class="subject-section"></div>
 </div>
 
@@ -954,10 +1176,12 @@ body {
   <div class="subject-tabs">
     <button class="subject-tab active" data-tab="math-points" onclick="switchSubjectTab('math','math-points')">📚 知识点</button>
     <button class="subject-tab" data-tab="math-formulas" onclick="switchSubjectTab('math','math-formulas')">📐 公式</button>
+    <button class="subject-tab" data-tab="math-calculation" onclick="switchSubjectTab('math','math-calculation')">🧮 每日计算</button>
     <button class="subject-tab" data-tab="math-practice" onclick="switchSubjectTab('math','math-practice')">📝 每日一练</button>
   </div>
   <div id="math-points" class="subject-section active"></div>
   <div id="math-formulas" class="subject-section"></div>
+  <div id="math-calculation" class="subject-section"></div>
   <div id="math-practice" class="subject-section"></div>
 </div>
 
@@ -970,10 +1194,12 @@ body {
   <div class="subject-tabs">
     <button class="subject-tab active" data-tab="english-words" onclick="switchSubjectTab('english','english-words')">🔤 单词</button>
     <button class="subject-tab" data-tab="english-sentences" onclick="switchSubjectTab('english','english-sentences')">💬 重点句型</button>
+    <button class="subject-tab" data-tab="english-dictation" onclick="switchSubjectTab('english','english-dictation')">🎧 听写</button>
     <button class="subject-tab" data-tab="english-practice" onclick="switchSubjectTab('english','english-practice')">📝 每日一练</button>
   </div>
   <div id="english-words" class="subject-section active"></div>
   <div id="english-sentences" class="subject-section"></div>
+  <div id="english-dictation" class="subject-section"></div>
   <div id="english-practice" class="subject-section"></div>
 </div>
 
@@ -1441,6 +1667,9 @@ function init() {
   renderChinese();
   renderMath();
   renderEnglish();
+  renderDictation('chinese');
+  renderDictation('english');
+  renderCalculation();
   renderCheckinCalendar();
   renderRecords();
   renderStats();
@@ -1613,6 +1842,11 @@ function switchSubjectTab(subject, tab) {
   page.querySelector(`.subject-tab[data-tab="${tab}"]`).classList.add('active');
   page.querySelectorAll('.subject-section').forEach(s => s.classList.remove('active'));
   document.getElementById(tab).classList.add('active');
+
+  // 按需渲染
+  if (tab === 'chinese-dictation') renderDictation('chinese');
+  else if (tab === 'english-dictation') renderDictation('english');
+  else if (tab === 'math-calculation') renderCalculation();
 }
 
 // ============================================================
@@ -1700,6 +1934,460 @@ function answerDailyQ(idx, ans, subj) {
   dailyQAnswered[subj] = true;
   updateDailyQuestion();
   updateDashboard();
+}
+
+// ============================================================
+//  听写功能（语文 & 英语）
+// ============================================================
+
+let dictationState = { subj: '', words: [], index: 0, results: [], started: false };
+
+function renderDictation(subj) {
+  const container = document.getElementById(subj + '-dictation');
+  if (subj === 'chinese') {
+    container.innerHTML = `
+      <div class="card">
+        <div class="card-title"><span class="emoji">🎧</span> 课后词语听写</div>
+        <p style="font-size:14px;color:var(--text-light);margin-bottom:12px">系统会朗读词语，你在输入框里写出对应的词语。每个词语读两遍哦～</p>
+        <div class="dictation-box" id="dictationBox">
+          <div style="padding:20px 0">
+            <div style="font-size:48px;margin-bottom:10px">📝</div>
+            <p style="font-size:16px;color:var(--text-light);margin-bottom:16px">共 ${CHINESE_WORDS.length} 个词语，准备好了吗？</p>
+            <button class="dictation-btn primary" onclick="startDictation('chinese')">🎯 开始听写</button>
+          </div>
+        </div>
+      </div>`;
+  } else {
+    container.innerHTML = `
+      <div class="card">
+        <div class="card-title"><span class="emoji">🎧</span> 单词听写</div>
+        <p style="font-size:14px;color:var(--text-light);margin-bottom:12px">系统会朗读英文单词，你在输入框里拼写出来。每个单词读两遍哦～</p>
+        <div class="dictation-box" id="dictationBox">
+          <div style="padding:20px 0">
+            <div style="font-size:48px;margin-bottom:10px">📝</div>
+            <p style="font-size:16px;color:var(--text-light);margin-bottom:16px">共 ${ENGLISH_WORDS.length} 个单词，准备好了吗？</p>
+            <button class="dictation-btn primary" onclick="startDictation('english')">🎯 开始听写</button>
+          </div>
+        </div>
+      </div>`;
+  }
+}
+
+function startDictation(subj) {
+  const words = subj === 'chinese' ? CHINESE_WORDS : ENGLISH_WORDS;
+  // 随机打乱顺序
+  const shuffled = [...words].sort(() => Math.random() - 0.5);
+  dictationState = { subj, words: shuffled, index: 0, results: [], started: true };
+  showDictationWord();
+}
+
+function showDictationWord() {
+  const { subj, words, index } = dictationState;
+  const box = document.getElementById('dictationBox');
+  if (index >= words.length) {
+    showDictationSummary();
+    return;
+  }
+  const word = words[index];
+  const total = words.length;
+  const current = index + 1;
+
+  const wordText = subj === 'chinese' ? word.word : word.en;
+  const hintText = subj === 'chinese' ? `拼音提示：${word.pinyin}` : `中文提示：${word.cn}`;
+
+  box.innerHTML = `
+    <div class="dictation-progress">第 ${current} / ${total} 个</div>
+    <div style="display:flex;justify-content:center;gap:8px;margin-bottom:8px">
+      <span style="font-size:13px;color:var(--text-light)">进度：</span>
+      <div style="flex:1;max-width:200px;height:6px;background:#F0F0F0;border-radius:3px;margin-top:6px">
+        <div style="width:${(current/total)*100}%;height:100%;background:var(--primary);border-radius:3px;transition:width 0.3s"></div>
+      </div>
+    </div>
+    <div class="dictation-hint">${hintText}</div>
+    <div class="dictation-word">🔊 听一听，写下来</div>
+    <input class="dictation-input" id="dictationInput" type="text" placeholder="在此输入..." autocomplete="off" onkeydown="if(event.key==='Enter')submitDictation()">
+    <div class="dictation-btns">
+      <button class="dictation-btn sound" onclick="playDictationSound()">🔊 再听一遍</button>
+      <button class="dictation-btn primary" onclick="submitDictation()">✅ 提交</button>
+      <button class="dictation-btn secondary" onclick="skipDictation()">⏭️ 跳过</button>
+    </div>
+    <div class="dictation-result" id="dictationResult"></div>
+  `;
+  document.getElementById('dictationInput').focus();
+
+  // 自动朗读
+  setTimeout(() => playDictationSound(), 300);
+}
+
+function playDictationSound() {
+  const { subj, words, index } = dictationState;
+  const word = words[index];
+  if (!word) return;
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance();
+    if (subj === 'chinese') {
+      utterance.text = word.word;
+      utterance.lang = 'zh-CN';
+    } else {
+      utterance.text = word.en;
+      utterance.lang = 'en-US';
+    }
+    utterance.rate = 0.8;
+    utterance.pitch = 1.1;
+    window.speechSynthesis.speak(utterance);
+    // 读两遍
+    setTimeout(() => {
+      const u2 = new SpeechSynthesisUtterance();
+      if (subj === 'chinese') {
+        u2.text = word.word;
+        u2.lang = 'zh-CN';
+      } else {
+        u2.text = word.en;
+        u2.lang = 'en-US';
+      }
+      u2.rate = 0.8;
+      u2.pitch = 1.1;
+      window.speechSynthesis.speak(u2);
+    }, 1500);
+  }
+}
+
+function submitDictation() {
+  const input = document.getElementById('dictationInput');
+  const resultDiv = document.getElementById('dictationResult');
+  const answer = input.value.trim();
+  if (!answer) { return; }
+
+  const { subj, words, index } = dictationState;
+  const word = words[index];
+  const correct = subj === 'chinese' ? word.word : word.en.toLowerCase();
+  const isCorrect = answer.toLowerCase() === correct;
+
+  dictationState.results.push({
+    word: subj === 'chinese' ? word.word : word.en,
+    pinyin: subj === 'chinese' ? word.pinyin : '',
+    meaning: subj === 'chinese' ? word.group : word.cn,
+    correct: isCorrect,
+    answer: answer
+  });
+
+  resultDiv.className = 'dictation-result ' + (isCorrect ? 'correct' : 'wrong');
+  resultDiv.textContent = isCorrect ? '✅ 太棒了！写对了！' : `❌ 正确答案是：${correct}`;
+
+  // 禁用输入
+  input.disabled = true;
+  const btns = document.querySelectorAll('.dictation-btns button');
+  btns.forEach(b => b.disabled = true);
+
+  // 自动跳到下一个
+  setTimeout(() => {
+    dictationState.index++;
+    showDictationWord();
+  }, 1200);
+}
+
+function skipDictation() {
+  const { subj, words, index } = dictationState;
+  const word = words[index];
+  dictationState.results.push({
+    word: subj === 'chinese' ? word.word : word.en,
+    pinyin: subj === 'chinese' ? word.pinyin : '',
+    meaning: subj === 'chinese' ? word.group : word.cn,
+    correct: false,
+    answer: '（跳过）'
+  });
+  dictationState.index++;
+  showDictationWord();
+}
+
+function showDictationSummary() {
+  const { subj, results } = dictationState;
+  const total = results.length;
+  const correct = results.filter(r => r.correct).length;
+  const wrong = total - correct;
+  const pct = Math.round(correct / total * 100);
+  const box = document.getElementById('dictationBox');
+
+  let listHtml = '';
+  results.forEach(r => {
+    const cls = r.correct ? 'word-correct' : 'word-wrong';
+    const mark = r.correct ? '✅' : '❌';
+    listHtml += `<div class="summary-item">
+      <span>${mark} <strong>${r.word}</strong> ${r.pinyin ? '(' + r.pinyin + ')' : ''}</span>
+      <span class="${cls}">${r.correct ? '✓' : '✗ ' + (r.answer === '（跳过）' ? '' : '你写: ' + r.answer)}</span>
+    </div>`;
+  });
+
+  // 更新练习统计
+  exerciseStats[subj] += total;
+  exerciseStats.total += total;
+  exerciseStats.correct += correct;
+  setLS('loomy_g5_exercise', exerciseStats);
+  updateDashboard();
+
+  let emoji = '🏆';
+  let comment = '太厉害了！继续加油！';
+  if (pct < 60) { emoji = '💪'; comment = '有进步空间，多练练就好了！'; }
+  else if (pct < 80) { emoji = '👍'; comment = '还不错，再巩固一下！'; }
+  else if (pct < 95) { emoji = '🌟'; comment = '很棒！掌握得很好！'; }
+
+  box.innerHTML = `
+    <div class="dictation-summary">
+      <div style="text-align:center;margin-bottom:16px">
+        <div style="font-size:56px">${emoji}</div>
+        <h3>听写完成！</h3>
+        <p style="font-size:14px;color:var(--text-light)">${comment}</p>
+      </div>
+      <div style="display:flex;justify-content:center;gap:30px;margin-bottom:16px">
+        <div style="text-align:center">
+          <div style="font-size:32px;font-weight:800;color:#16A34A">${correct}</div>
+          <div style="font-size:12px;color:var(--text-light)">正确</div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:32px;font-weight:800;color:#DC2626">${wrong}</div>
+          <div style="font-size:12px;color:var(--text-light)">错误</div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:32px;font-weight:800;color:var(--primary)">${pct}%</div>
+          <div style="font-size:12px;color:var(--text-light)">正确率</div>
+        </div>
+      </div>
+      <div style="max-height:300px;overflow-y:auto">${listHtml}</div>
+      <div style="text-align:center;margin-top:16px">
+        <button class="dictation-btn primary" onclick="renderDictation('${subj}')">🔄 再来一次</button>
+      </div>
+    </div>
+  `;
+}
+
+// ============================================================
+//  数学每日计算（20题，苏教版同步）
+// ============================================================
+
+function generateCalcQuestions() {
+  const questions = [];
+  const types = ['add_dec', 'sub_dec', 'mul_dec', 'div_dec', 'area', 'unit', 'neg_cmp'];
+
+  for (let i = 0; i < 20; i++) {
+    const type = types[i % types.length];
+    let q = {};
+
+    switch(type) {
+      case 'add_dec': {
+        // 小数加法
+        const a = Math.round(Math.random() * 90 + 10) / 10;
+        const b = Math.round(Math.random() * 90 + 10) / 10;
+        q = { text: `${a} + ${b} = ？`, answer: Math.round((a + b) * 10) / 10 };
+        break;
+      }
+      case 'sub_dec': {
+        // 小数减法
+        let a = Math.round(Math.random() * 90 + 10) / 10;
+        let b = Math.round(Math.random() * 90 + 10) / 10;
+        if (a < b) [a, b] = [b, a];
+        q = { text: `${a} - ${b} = ？`, answer: Math.round((a - b) * 10) / 10 };
+        break;
+      }
+      case 'mul_dec': {
+        // 小数乘法
+        const a = Math.round(Math.random() * 40 + 10) / 10;
+        const b = Math.round(Math.random() * 40 + 10) / 10;
+        q = { text: `${a} × ${b} = ？`, answer: Math.round((a * b) * 100) / 100 };
+        break;
+      }
+      case 'div_dec': {
+        // 小数除法
+        let b = Math.round(Math.random() * 8 + 2) / 10;
+        let ans = Math.round(Math.random() * 40 + 10) / 10;
+        let a = Math.round((b * ans) * 10) / 10;
+        if (a === Math.floor(a)) a = Math.round(a);
+        q = { text: `${a} ÷ ${b} = ？`, answer: Math.round((a / b) * 10) / 10 };
+        break;
+      }
+      case 'area': {
+        // 面积计算
+        const shapes = ['平行四边形', '三角形', '梯形'];
+        const shape = shapes[Math.floor(Math.random() * shapes.length)];
+        let text, answer;
+        if (shape === '平行四边形') {
+          const base = Math.round(Math.random() * 8 + 2);
+          const height = Math.round(Math.random() * 6 + 2);
+          text = `平行四边形底=${base}cm，高=${height}cm，面积=？cm²`;
+          answer = base * height;
+        } else if (shape === '三角形') {
+          const base = Math.round(Math.random() * 8 + 2);
+          const height = Math.round(Math.random() * 6 + 2);
+          text = `三角形底=${base}cm，高=${height}cm，面积=？cm²`;
+          answer = base * height / 2;
+        } else {
+          const a = Math.round(Math.random() * 4 + 4);
+          const b = Math.round(Math.random() * 4 + 2);
+          const h = Math.round(Math.random() * 4 + 2);
+          text = `梯形上底=${a}cm，下底=${b}cm，高=${h}cm，面积=？cm²`;
+          answer = (a + b) * h / 2;
+        }
+        q = { text, answer: answer % 1 === 0 ? answer : Math.round(answer * 10) / 10 };
+        break;
+      }
+      case 'unit': {
+        // 单位换算
+        const units = [
+          { q: '3公顷 = ？平方米', a: 30000 },
+          { q: '5公顷 = ？平方米', a: 50000 },
+          { q: '2公顷 = ？平方米', a: 20000 },
+          { q: '4公顷 = ？平方米', a: 40000 },
+          { q: '6公顷 = ？平方米', a: 60000 },
+          { q: '1平方千米 = ？公顷', a: 100 },
+          { q: '2平方千米 = ？公顷', a: 200 },
+          { q: '3平方千米 = ？公顷', a: 300 },
+          { q: '50000平方米 = ？公顷', a: 5 },
+          { q: '30000平方米 = ？公顷', a: 3 },
+          { q: '200公顷 = ？平方千米', a: 2 },
+          { q: '400公顷 = ？平方千米', a: 4 }
+        ];
+        const u = units[Math.floor(Math.random() * units.length)];
+        q = { text: u.q, answer: u.a };
+        break;
+      }
+      case 'neg_cmp': {
+        // 负数比较
+        const a = -Math.round(Math.random() * 9 + 1);
+        const b = -Math.round(Math.random() * 9 + 1);
+        if (a === b) continue; // 跳过相等的情况，重新生成
+        const ans = a > b ? a : b;
+        q = { text: `${a} 和 ${b}，较大的数是？`, answer: ans };
+        break;
+      }
+    }
+    if (q.text) questions.push(q);
+  }
+  return questions.slice(0, 20);
+}
+
+function renderCalculation() {
+  const container = document.getElementById('math-calculation');
+  const questions = generateCalcQuestions();
+
+  // 存到全局
+  window._calcQuestions = questions;
+  window._calcSubmitted = false;
+
+  let html = `<div class="card">
+    <div class="card-title"><span class="emoji">🧮</span> 每日计算（20题）</div>
+    <p style="font-size:14px;color:var(--text-light);margin-bottom:12px">
+      涵盖小数加减法、小数乘除法、面积计算、单位换算、负数比较，和苏教版内容同步哦～
+    </p>
+    <div class="calculation-box">
+      <div class="calculation-header">
+        <span class="calc-title">✏️ 认真计算，仔细检查！</span>
+        <span class="calc-timer" id="calcTimer">⏱️ 00:00</span>
+      </div>
+      <div class="calc-question-list" id="calcQuestionList">`;
+
+  questions.forEach((q, i) => {
+    html += `<div class="calc-question">
+      <span class="q-num">${i + 1}</span>
+      <span class="q-text">${q.text}</span>
+      <input class="q-input" id="calcInput_${i}" type="text" placeholder="答案" autocomplete="off" onkeydown="if(event.key==='Enter')document.getElementById('calcInput_${i+1}')?.focus()">
+      <span class="q-status" id="calcStatus_${i}"></span>
+    </div>`;
+  });
+
+  html += `</div>
+      <button class="calc-submit-btn" id="calcSubmitBtn" onclick="submitCalculation()">📝 提交批改</button>
+      <div id="calcResult"></div>
+    </div>
+  </div>`;
+
+  container.innerHTML = html;
+
+  // 自动聚焦到第一个输入框
+  setTimeout(() => document.getElementById('calcInput_0')?.focus(), 100);
+
+  // 计时器
+  if (window._calcTimer) clearInterval(window._calcTimer);
+  let seconds = 0;
+  window._calcTimer = setInterval(() => {
+    seconds++;
+    const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+    const s = String(seconds % 60).padStart(2, '0');
+    const el = document.getElementById('calcTimer');
+    if (el) el.textContent = `⏱️ ${m}:${s}`;
+  }, 1000);
+}
+
+function submitCalculation() {
+  if (window._calcSubmitted) return;
+  window._calcSubmitted = true;
+
+  if (window._calcTimer) clearInterval(window._calcTimer);
+
+  const questions = window._calcQuestions;
+  let correct = 0;
+  let total = questions.length;
+
+  questions.forEach((q, i) => {
+    const input = document.getElementById(`calcInput_${i}`);
+    const status = document.getElementById(`calcStatus_${i}`);
+    if (!input) return;
+    const userAns = parseFloat(input.value.trim());
+    const isCorrect = Math.abs(userAns - q.answer) < 0.01;
+    if (isCorrect) correct++;
+    input.className = 'q-input ' + (isCorrect ? 'correct' : 'wrong');
+    input.disabled = true;
+    status.textContent = isCorrect ? '✅' : '❌';
+  });
+
+  // 更新统计
+  exerciseStats.math += total;
+  exerciseStats.total += total;
+  exerciseStats.correct += correct;
+  setLS('loomy_g5_exercise', exerciseStats);
+  updateDashboard();
+
+  const pct = Math.round(correct / total * 100);
+  const btn = document.getElementById('calcSubmitBtn');
+  btn.disabled = true;
+  btn.textContent = '✅ 已批改';
+
+  let emoji = '🏆', comment = '太厉害了！计算小能手！';
+  if (pct < 60) { emoji = '💪'; comment = '还需要多练练哦，加油！'; }
+  else if (pct < 80) { emoji = '👍'; comment = '不错，再仔细一点就更好了！'; }
+  else if (pct < 90) { emoji = '🌟'; comment = '掌握得很好，继续保持！'; }
+  else if (pct < 100) { emoji = '🎉'; comment = '非常棒！接近满分了！'; }
+
+  // 错题列表
+  let wrongHtml = '';
+  questions.forEach((q, i) => {
+    const input = document.getElementById(`calcInput_${i}`);
+    if (!input) return;
+    const userAns = input.value.trim();
+    const isCorrect = Math.abs(parseFloat(userAns) - q.answer) < 0.01;
+    if (!isCorrect) {
+      wrongHtml += `<div class="calc-result-item">
+        <span>${q.text} → 你的答案：${userAns || '（空）'}</span>
+        <span class="r-wrong">正确答案：${q.answer}</span>
+      </div>`;
+    }
+  });
+
+  const resultDiv = document.getElementById('calcResult');
+  resultDiv.innerHTML = `
+    <div class="calc-score">
+      <div style="font-size:56px;margin-bottom:8px">${emoji}</div>
+      <div class="score-num">${correct} / ${total}</div>
+      <div class="score-label">${comment}</div>
+      <div style="font-size:14px;color:var(--text-light);margin-top:4px">正确率 ${pct}%</div>
+    </div>
+    ${wrongHtml ? `<div class="card" style="margin-top:12px">
+      <div class="card-title"><span class="emoji">📋</span> 错题回顾</div>
+      <div class="calc-result-list">${wrongHtml}</div>
+    </div>` : ''}
+    <div style="text-align:center;margin-top:12px">
+      <button class="dictation-btn primary" onclick="renderCalculation()">🔄 重新出题</button>
+    </div>
+  `;
 }
 
 // ============================================================
